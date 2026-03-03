@@ -1,4 +1,3 @@
-[![HumanBenchmark Cheats Banner](./assets/banner.png)](https://github.com/pixelatedxp/human-benchmark-cheats)
 # Human Benchmark Cheats
 
 A structured repository containing scripts to automate and solve various [Human Benchmark](https://humanbenchmark.com/) tests.
