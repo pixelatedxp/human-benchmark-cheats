@@ -25,7 +25,13 @@
     });
     const target = document.querySelector('.number-memory-test') || document.body;
     observer.observe(target, { childList: true, subtree: true });
-    const duration = 5 * 60 * 1000;
+
+    // Read the user-provided slider value (or default to 5)
+    const activeMinutes = window.__nmTimerMinutes || 5;
+    const duration = activeMinutes * 60 * 1000;
+
+    console.log(`%c TIMER SET FOR ${activeMinutes} MINUTES `, "background: #e67e22; color: white; padding: 5px; font-weight: bold;");
+
     setTimeout(() => {
         observer.disconnect();
         console.log("%c TIME EXPIRED: SNIPER DEACTIVATED ", "background: #c0392b; color: white; padding: 5px; font-weight: bold;");

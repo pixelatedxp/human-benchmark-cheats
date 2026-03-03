@@ -71,6 +71,19 @@ document.addEventListener('DOMContentLoaded', async () => {
             statusBadge.textContent = 'Idle on Site';
         }
 
+        // Sync slider and input for Number Memory
+        const nmSlider = document.getElementById('nm-slider');
+        const nmInput = document.getElementById('nm-time-input');
+        if (nmSlider && nmInput) {
+            nmSlider.addEventListener('input', (e) => { nmInput.value = e.target.value; });
+            nmInput.addEventListener('input', (e) => {
+                let val = parseInt(e.target.value) || 0;
+                if (val > 20) val = 20;
+                if (val < 0) val = 0;
+                nmSlider.value = val;
+            });
+        }
+
         const buttons = document.querySelectorAll('.run-script');
         buttons.forEach(btn => {
             btn.addEventListener('click', async () => {
@@ -89,6 +102,18 @@ document.addEventListener('DOMContentLoaded', async () => {
                         if (tabId === tab.id && info.status === 'complete') {
                             chrome.tabs.onUpdated.removeListener(listener);
 
+                            // Dynamically pass the requested timer length into the webpage memory first
+                            if (scriptFile === "number_memory_timer.js") {
+                                const selectedMins = parseInt(document.getElementById('nm-slider').value) || 5;
+                                chrome.scripting.executeScript({
+                                    target: { tabId: tab.id },
+                                    world: "MAIN",
+                                    func: (mins) => { window.__nmTimerMinutes = mins; },
+                                    args: [selectedMins]
+                                });
+                            }
+
+                            // Inject the actual game script into the MAIN world
                             chrome.scripting.executeScript({
                                 target: { tabId: tab.id },
                                 files: [`scripts/${scriptFile}`],

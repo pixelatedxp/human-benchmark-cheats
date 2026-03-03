@@ -55,7 +55,6 @@
 
             <div id="view-number" class="view">
                 <h2>Number Memory</h2>
-                <p>Memory insertion logic:</p>
                 <div class="actions">
                     <button class="btn btn-primary run-script" data-script="number_memory_instant.js">
                         <span class="icon"></span> Instant Inject
@@ -63,8 +62,17 @@
                     <button class="btn btn-secondary run-script" data-script="number_memory_watch_mode.js">
                         <span class="icon"></span> Watch Mode
                     </button>
-                    <button class="btn btn-danger run-script" data-script="number_memory_timer.js">
-                        <span class="icon"></span> 5-Min Timer
+
+                    <div class="slider-container">
+                        <div class="slider-header">
+                            <span>Bot Timer (Minutes):</span>
+                            <input type="number" id="nm-time-input" min="0" max="20" value="5" class="time-input">
+                        </div>
+                        <input type="range" id="nm-slider" min="0" max="20" value="5" class="styled-slider">
+                    </div>
+
+                    <button class="btn btn-danger run-script dynamic-timer-btn" data-script="number_memory_timer.js">
+                        <span class="icon"></span> Inject Timed Bot
                     </button>
                 </div>
             </div>
